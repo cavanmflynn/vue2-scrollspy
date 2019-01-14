@@ -52,11 +52,11 @@ const install = (Vue, options) => {
     }
   }, options || {})
 
-  function prependModuleName(name) {
+  function prependModuleName (name) {
     if (options.storeModule) {
-      return `${options.storeModule}/${name}`;
+      return `${options.storeModule}/${name}`
     }
-    return name;
+    return name
   }
 
   function findElements (container, selector) {
@@ -220,7 +220,7 @@ const install = (Vue, options) => {
         options: { sectionSelector, useBodyAsScrollElement }
       } = el[scrollSpyContext]
       initScrollSections(el, sectionSelector)
-      const { eventEl, onScroll } = el[scrollSpyContext]
+      let { eventEl, onScroll } = el[scrollSpyContext]
       if (useBodyAsScrollElement) {
         eventEl = window.document.body
       }
