@@ -217,12 +217,12 @@ const install = (Vue, options) => {
     },
     inserted: function (el) {
       const {
-        options: { sectionSelector, useBodyAsScrollElement }
+        options: { sectionSelector, useWindowScroll }
       } = el[scrollSpyContext]
       initScrollSections(el, sectionSelector)
       let { eventEl, onScroll } = el[scrollSpyContext]
-      if (useBodyAsScrollElement) {
-        eventEl = window.document.body
+      if (useWindowScroll) {
+        eventEl = window.document
       }
       eventEl.addEventListener('scroll', onScroll)
 
