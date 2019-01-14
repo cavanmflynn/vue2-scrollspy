@@ -52,6 +52,13 @@ const install = (Vue, options) => {
     }
   }, options || {})
 
+  function prependModuleName(name) {
+    if (options.storeModule) {
+      return `${options.storeModule}/${name}`;
+    }
+    return name;
+  }
+
   function findElements (container, selector) {
     if (!selector) {
       return container.children
@@ -187,6 +194,8 @@ const install = (Vue, options) => {
 
           if (options.data) {
             Vue.set(vnode.context, options.data, index)
+          } else if (options.store) {
+            options.store.commit(prependModuleName(options.storeMethodName), index)
           }
         }
       }
@@ -208,10 +217,13 @@ const install = (Vue, options) => {
     },
     inserted: function (el) {
       const {
-        options: { sectionSelector }
+        options: { sectionSelector, useBodyAsScrollElement }
       } = el[scrollSpyContext]
       initScrollSections(el, sectionSelector)
       const { eventEl, onScroll } = el[scrollSpyContext]
+      if (useBodyAsScrollElement) {
+        eventEl = window.document.body
+      }
       eventEl.addEventListener('scroll', onScroll)
 
       onScroll()
